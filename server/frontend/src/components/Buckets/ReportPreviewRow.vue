@@ -10,6 +10,24 @@
     <td>{{ report.app_version }}</td>
     <td>{{ report.breakage_category }}</td>
     <td>
+      {{
+        report.details.boolean
+          .broken_site_report_tab_info_antitracking_has_tracking_content_blocked
+      }}
+    </td>
+    <td>
+      {{
+        report.details.string
+          .broken_site_report_tab_info_antitracking_block_list
+      }}
+    </td>
+    <td>
+      {{
+        report.details.boolean
+          .broken_site_report_tab_info_antitracking_is_private_browsing
+      }}
+    </td>
+    <td>
       <img
         v-if="report.os === 'Linux'"
         width="16px"

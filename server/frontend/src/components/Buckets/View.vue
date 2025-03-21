@@ -154,6 +154,9 @@
               <th>Channel</th>
               <th>Version</th>
               <th>Breakage Category</th>
+              <th>ETP content blocked?</th>
+              <th>ETP blocklist</th>
+              <th>Is PBM?</th>
               <th>OS</th>
             </tr>
           </thead>
