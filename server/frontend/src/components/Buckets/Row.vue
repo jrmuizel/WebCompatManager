@@ -25,33 +25,23 @@
     </td>
     <td>
       <a
-        v-if="bucket.bug && bucket.bug_urltemplate"
-        :class="{ fixedbug: bucket.bug_closed }"
-        :href="bucket.bug_urltemplate"
-        target="_blank"
+        class="btn btn-default"
+        title="View details and comments"
+        :href="bucket.view_url"
       >
-        {{ bucket.bug }}
+        View details and comments
       </a>
-      <p v-else-if="bucket.bug">
-        {{ bucket.bug }} on {{ bucket.bug_hostname }}
-      </p>
-      <div v-else-if="canEdit" class="btn-group">
-        <assignbutton :bucket="bucket.id" :providers="providers" />
-        <a :href="bucket.new_bug_url" class="btn btn-danger">File a bug</a>
-      </div>
     </td>
   </tr>
 </template>
 
 <script>
 import { date } from "../../helpers";
-import AssignBtn from "./AssignBtn.vue";
 import ActivityGraph from "../ActivityGraph.vue";
 
 export default {
   components: {
     activitygraph: ActivityGraph,
-    assignbutton: AssignBtn,
   },
   filters: {
     date: date,

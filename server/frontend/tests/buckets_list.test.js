@@ -81,9 +81,5 @@ test("bucket list has two buckets", async () => {
   // Assert two buckets (one assigned to a bug, the other not) are displayed in the table
   expect(document.querySelectorAll("tbody tr").length).toBe(2);
   getByText("A short description for bucket 1");
-  const buttonLink = getByText("1630739");
-  expect(buttonLink).toHaveProperty("href", buckets.results[0].bug_urltemplate);
-  expect(buttonLink).toHaveProperty("target", "_blank");
   getByText("A short description for bucket 2");
-  getByText("Assign an existing bug");
 });
