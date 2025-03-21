@@ -201,7 +201,7 @@ import AssignBtn from "./AssignBtn.vue";
 import HideBucketBtn from "./HideBucketBtn.vue";
 import ReportPreviewRow from "./ReportPreviewRow.vue";
 
-const pageSize = 10;
+const pageSize = 50;
 
 export default {
   components: {
