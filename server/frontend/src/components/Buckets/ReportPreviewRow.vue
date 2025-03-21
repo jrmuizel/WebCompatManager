@@ -5,28 +5,6 @@
       <span class="two-line-limit">{{ report.url }}</span>
     </td>
     <td class="wrap-normal">{{ report.comments }}</td>
-    <td>{{ report.app_name }}</td>
-    <td>{{ report.app_channel }}</td>
-    <td>{{ report.app_version }}</td>
-    <td>{{ report.breakage_category }}</td>
-    <td>
-      {{
-        report.details.boolean
-          .broken_site_report_tab_info_antitracking_has_tracking_content_blocked
-      }}
-    </td>
-    <td>
-      {{
-        report.details.string
-          .broken_site_report_tab_info_antitracking_block_list
-      }}
-    </td>
-    <td>
-      {{
-        report.details.boolean
-          .broken_site_report_tab_info_antitracking_is_private_browsing
-      }}
-    </td>
     <td>
       <img
         v-if="report.os === 'Linux'"
@@ -57,6 +35,28 @@
         :src="staticLogo('android')"
       />
       <span v-else>{{ report.os }}</span>
+    </td>
+    <td>{{ report.app_name }}</td>
+    <td>{{ report.app_channel }}</td>
+    <td>{{ report.app_version }}</td>
+    <td>{{ report.breakage_category }}</td>
+    <td>
+      {{
+        report.details.boolean
+          .broken_site_report_tab_info_antitracking_has_tracking_content_blocked
+      }}
+    </td>
+    <td>
+      {{
+        report.details.string
+          .broken_site_report_tab_info_antitracking_block_list
+      }}
+    </td>
+    <td>
+      {{
+        report.details.boolean
+          .broken_site_report_tab_info_antitracking_is_private_browsing
+      }}
     </td>
   </tr>
 </template>
