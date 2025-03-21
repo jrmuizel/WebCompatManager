@@ -119,6 +119,16 @@ CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 USE_OIDC = False
 
+
+# Credentials to connect to BigQuery
+# This is using service account credentials directly.
+# If not specified, gcloud will look for Application Default Credentials or
+# use a service account attached to the Compute VM.
+
+BIGQUERY_PROJECT = "moz-fx-dev-dschubert-wckb"
+BIGQUERY_TABLE = "moz-fx-dev-dschubert-wckb.webcompat_user_reports.user_reports_prod"
+BIGQUERY_SERVICE_ACCOUNT = ""
+
 # Modify the way we generate our usernames, based on the email address
 # OIDC_USERNAME_ALGO = 'server.auth.generate_username'
 #
