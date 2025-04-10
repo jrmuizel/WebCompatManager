@@ -150,11 +150,14 @@
               <th>Date Reported</th>
               <th>URL</th>
               <th>User Comments</th>
+              <th>OS</th>
               <th>App</th>
               <th>Channel</th>
               <th>Version</th>
               <th>Breakage Category</th>
-              <th>OS</th>
+              <th>ETP content blocked?</th>
+              <th>ETP blocklist</th>
+              <th>Is PBM?</th>
             </tr>
           </thead>
           <tbody>
@@ -201,7 +204,7 @@ import AssignBtn from "./AssignBtn.vue";
 import HideBucketBtn from "./HideBucketBtn.vue";
 import ReportPreviewRow from "./ReportPreviewRow.vue";
 
-const pageSize = 10;
+const pageSize = 50;
 
 export default {
   components: {

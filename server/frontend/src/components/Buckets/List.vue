@@ -162,7 +162,7 @@
                   sortKeys.includes('-bug__external_id'),
               }"
             >
-              External Bug
+              Details
             </th>
           </tr>
         </thead>

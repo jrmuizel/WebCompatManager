@@ -1,7 +1,6 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-import json
 from contextlib import suppress
 from logging import getLogger
 from urllib.parse import urlsplit
@@ -52,7 +51,7 @@ class Command(BaseCommand):
                 app_version=row.app_version,
                 breakage_category=row.breakage_category,
                 comments=row.comments,
-                details=json.loads(row.details),
+                details=row.details,
                 reported_at=row.reported_at.replace(tzinfo=timezone.utc),
                 url=urlsplit(row.url),
                 os=row.os,
