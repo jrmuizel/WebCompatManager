@@ -47,21 +47,24 @@
       ({{ report.app_channel }})
     </td>
     <td>
-      {{
-        report.details.boolean
-          .broken_site_report_tab_info_antitracking_has_tracking_content_blocked
-      }}
-    </td>
-    <td>
-      {{
-        report.details.string
-          .broken_site_report_tab_info_antitracking_block_list
-      }}
-    </td>
-    <td>
+      PBM:
       {{
         report.details.boolean
           .broken_site_report_tab_info_antitracking_is_private_browsing
+          | humanBool
+      }}<br />
+
+      Blocklist:
+      {{
+        report.details.string
+          .broken_site_report_tab_info_antitracking_block_list || "n/a"
+      }}<br />
+
+      Any content blocked:
+      {{
+        report.details.boolean
+          .broken_site_report_tab_info_antitracking_has_tracking_content_blocked
+          | humanBool
       }}
     </td>
   </tr>
@@ -79,6 +82,13 @@ export default {
   },
   filters: {
     shorterDate: shorterDate,
+    humanBool: (value) => {
+      if (value === undefined || value === null) {
+        return "n/a";
+      }
+
+      return value ? "yes" : "no";
+    },
   },
   methods: {
     staticLogo(name) {

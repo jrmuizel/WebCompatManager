@@ -104,9 +104,7 @@
               <th>URL</th>
               <th>User Comments</th>
               <th>Product</th>
-              <th>ETP content blocked?</th>
-              <th>ETP blocklist</th>
-              <th>Is PBM?</th>
+              <th>ETP &amp; PBM</th>
             </tr>
           </thead>
           <tbody>
