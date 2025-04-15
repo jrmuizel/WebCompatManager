@@ -6,7 +6,11 @@
         {{ report.url }}
       </a>
     </td>
-    <td class="wrap-normal">{{ maybeTranslatedComments(report) }}</td>
+    <td class="wrap-normal comments-col">
+      <div>
+        {{ maybeTranslatedComments(report) }}
+      </div>
+    </td>
     <td>
       <img
         v-if="report.os === 'Linux'"
@@ -100,6 +104,15 @@ export default {
 </script>
 
 <style scoped>
+.comments-col {
+  overflow-wrap: anywhere;
+
+  div {
+    max-height: 150px;
+    overflow: scroll;
+  }
+}
+
 .url-col a {
   display: block;
   max-width: 300px;
