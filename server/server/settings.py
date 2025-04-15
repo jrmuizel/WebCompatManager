@@ -127,6 +127,9 @@ USE_OIDC = False
 
 BIGQUERY_PROJECT = "moz-fx-dev-dschubert-wckb"
 BIGQUERY_TABLE = "moz-fx-dev-dschubert-wckb.webcompat_user_reports.user_reports_prod"
+BIGQUERY_TRANSLATIONS_TABLE = (
+    "moz-fx-dev-dschubert-wckb.webcompat_user_reports.translations"
+)
 BIGQUERY_SERVICE_ACCOUNT = ""
 
 # Modify the way we generate our usernames, based on the email address

@@ -4,7 +4,7 @@
     <td class="wrap-anywhere">
       <span class="two-line-limit">{{ report.url }}</span>
     </td>
-    <td class="wrap-normal">{{ report.comments }}</td>
+    <td class="wrap-normal">{{ maybeTranslatedComments(report) }}</td>
     <td>
       <img
         v-if="report.os === 'Linux'"
@@ -77,6 +77,21 @@ export default {
   methods: {
     staticLogo(name) {
       return window.location.origin + "/static/img/os/" + name + ".png";
+    },
+    maybeTranslatedComments(report) {
+      if (
+        report.comments_original_language &&
+        report.comments_original_language !== "en"
+      ) {
+        // The translation pipeline does escape HTML, and the "easiest" way to
+        // un-escape that is by just assignign it to an element and letting
+        // the browser do the magic.. :/
+        let el = document.createElement("span");
+        el.innerHTML = `[${report.comments_original_language}] ${report.comments_translated}`;
+        return el.innerText;
+      }
+
+      return report.comments;
     },
   },
 };

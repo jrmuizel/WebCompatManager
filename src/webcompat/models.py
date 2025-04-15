@@ -49,6 +49,8 @@ class Report:
     reported_at: datetime
     uuid: str
     url: SplitResult
+    comments_translated: str | None = None
+    comments_original_language: str | None = None
     app_channel: str | None = None
     breakage_category: str | None = None
 
