@@ -449,6 +449,8 @@ class ReportEntryManager(models.Manager):
             os=os,
             details=report.details,
             comments=report.comments,
+            comments_translated=report.comments_translated,
+            comments_original_language=report.comments_original_language,
         )
 
 
@@ -459,6 +461,8 @@ class ReportEntry(models.Model):
     )
     bucket = models.ForeignKey(Bucket, null=True, on_delete=models.deletion.CASCADE)
     comments = models.TextField()
+    comments_translated = models.TextField(null=True)
+    comments_original_language = models.TextField(null=True)
     details = models.JSONField()
     os = models.ForeignKey(OS, on_delete=models.deletion.CASCADE)
     reported_at = models.DateTimeField()
@@ -510,6 +514,8 @@ class ReportEntry(models.Model):
                 app_name=self.app.name,
                 app_version=self.app.version,
                 comments=self.comments,
+                comments_translated=self.comments_translated,
+                comments_original_language=self.comments_original_language,
                 details=self.details,
                 os=self.os.name,
                 reported_at=self.reported_at,

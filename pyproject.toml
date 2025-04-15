@@ -93,6 +93,7 @@ norecursedirs = [
 [tool.ruff]
 fix = true
 target-version = "py39"
+extend-exclude = ["**/migrations/*.py"]
 
 [tool.ruff.lint]
 select = [

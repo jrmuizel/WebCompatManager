@@ -34,7 +34,11 @@ class Command(BaseCommand):
 
         client = bigquery.Client(**params)
         result = client.query_and_wait(
-            f"SELECT * FROM `{settings.BIGQUERY_TABLE}` WHERE reported_at >= @since;",
+            f"""SELECT r.*, t.language_code, t.translated_text
+                FROM `{settings.BIGQUERY_TABLE}` as r
+                LEFT JOIN `{settings.BIGQUERY_TRANSLATIONS_TABLE}` t
+                    ON r.uuid = t.report_uuid
+                WHERE r.reported_at >= @since;""",
             job_config=bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ScalarQueryParameter("since", "DATETIME", options["since"])
@@ -51,6 +55,8 @@ class Command(BaseCommand):
                 app_version=row.app_version,
                 breakage_category=row.breakage_category,
                 comments=row.comments,
+                comments_translated=row.translated_text,
+                comments_original_language=row.language_code,
                 details=row.details,
                 reported_at=row.reported_at.replace(tzinfo=timezone.utc),
                 url=urlsplit(row.url),

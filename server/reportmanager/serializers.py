@@ -197,6 +197,8 @@ class ReportEntrySerializer(serializers.ModelSerializer):
             "breakage_category",
             "bucket",
             "comments",
+            "comments_translated",
+            "comments_original_language",
             "details",
             "id",
             "os",
