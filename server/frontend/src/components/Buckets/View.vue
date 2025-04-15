@@ -52,6 +52,18 @@
             </td>
           </tr>
           <tr>
+            <td>Known Bugs</td>
+            <td>
+              <a
+                class="btn btn-default"
+                :href="knownBugsUrl(bucket.domain)"
+                target="_blank"
+              >
+                Show open bugs for this domain
+              </a>
+            </td>
+          </tr>
+          <tr>
             <td>Reports in this bucket</td>
             <td>
               {{ bucket.size }}
@@ -393,6 +405,35 @@ export default {
         if (this.$route.hash !== "")
           this.$router.push({ path: this.$route.path, hash: "" });
       }
+    },
+    knownBugsUrl(domain) {
+      const searchParams = new URLSearchParams([
+        ["bug_file_loc_type", "allwordssubstr"],
+        ["bug_file_loc", domain],
+        ["query_format", "advanced"],
+        ["resolution", "---"],
+        ["j_top", "OR"],
+        ["f1", "OP"],
+        ["o2", "equals"],
+        ["f2", "product"],
+        ["v2", "Web Compatibility"],
+        ["o3", "equals"],
+        ["f3", "component"],
+        ["v3", "Site Reports"],
+        ["f4", "CP"],
+        ["f5", "OP"],
+        ["o6", "equals"],
+        ["f6", "product"],
+        ["v6", "Web Compatibility"],
+        ["o7", "equals"],
+        ["f7", "component"],
+        ["v7", "Privacy: Site Reports"],
+        ["f8", "CP"],
+      ]);
+
+      const url = new URL("https://bugzilla.mozilla.org/buglist.cgi");
+      url.search = searchParams.toString();
+      return url.toString();
     },
   },
   watch: {
