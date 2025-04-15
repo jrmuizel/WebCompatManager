@@ -8,7 +8,8 @@
     </td>
     <td class="wrap-normal comments-col">
       <div>
-        {{ maybeTranslatedComments(report) }}
+        <strong>{{ report.breakage_category }}</strong
+        >: {{ maybeTranslatedComments(report) }}
       </div>
     </td>
     <td>
@@ -45,7 +46,6 @@
     <td>{{ report.app_name }}</td>
     <td>{{ report.app_channel }}</td>
     <td>{{ report.app_version }}</td>
-    <td>{{ report.breakage_category }}</td>
     <td>
       {{
         report.details.boolean
