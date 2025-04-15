@@ -38,9 +38,6 @@
               <br v-if="canEdit" /><br v-if="canEdit" />
               <div v-if="canEdit" class="btn-group">
                 <assignbutton :bucket="bucket.id" :providers="providers" />
-                <a :href="bucket.new_bug_url" class="btn btn-danger"
-                  >File a bug</a
-                >
                 <hidebucketbutton
                   v-if="!bucket.hide_until"
                   :bucket="bucket.id"
@@ -48,6 +45,21 @@
                 <a v-else v-on:click="unhide" class="btn btn-default"
                   >Unmark triaged</a
                 >
+              </div>
+              <br v-if="canEdit" /><br v-if="canEdit" />
+              <div v-if="canEdit" class="btn-group">
+                <a
+                  class="btn btn-success"
+                  v-on:click="prepareSiteReport(reports)"
+                >
+                  Prepare new Site Report bug
+                </a>
+                <a
+                  class="btn btn-success"
+                  v-on:click="prepareETPStrictReport(reports)"
+                >
+                  Prepare new ETP Strict bug
+                </a>
               </div>
             </td>
           </tr>
@@ -209,6 +221,12 @@ import {
   jsonPretty,
   parseHash,
 } from "../../helpers";
+import {
+  etpStrictReportDescription,
+  newBugDefaultParams,
+  openPrefilledBugzillaBug,
+  siteReportDescription,
+} from "../../prefilled_bug_helpers";
 import * as api from "../../api";
 import PageNav from "../PageNav.vue";
 import ActivityGraph from "../ActivityGraph.vue";
@@ -434,6 +452,19 @@ export default {
       const url = new URL("https://bugzilla.mozilla.org/buglist.cgi");
       url.search = searchParams.toString();
       return url.toString();
+    },
+    prepareSiteReport(reports) {
+      const searchParams = newBugDefaultParams(reports[0]);
+      searchParams.append("component", "Site Reports");
+      searchParams.append("comment", siteReportDescription(reports[0]));
+      openPrefilledBugzillaBug(searchParams);
+    },
+    prepareETPStrictReport(reports) {
+      const searchParams = newBugDefaultParams(reports[0]);
+      searchParams.append("component", "Privacy: Site Reports");
+      searchParams.append("comment", etpStrictReportDescription(reports[0]));
+      searchParams.append("dependson", "tp-breakage");
+      openPrefilledBugzillaBug(searchParams);
     },
   },
   watch: {
