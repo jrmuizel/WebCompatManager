@@ -1,8 +1,10 @@
 <template>
   <tr v-on:click="report.view_url">
     <td class="wrap-normal">{{ report.reported_at | shorterDate }}</td>
-    <td class="wrap-anywhere">
-      <span class="two-line-limit">{{ report.url }}</span>
+    <td class="url-col">
+      <a :href="report.url" target="_blank" rel="noreferrer">
+        {{ report.url }}
+      </a>
     </td>
     <td class="wrap-normal">{{ maybeTranslatedComments(report) }}</td>
     <td>
@@ -96,3 +98,18 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.url-col a {
+  display: block;
+  max-width: 300px;
+  overflow: scroll;
+  text-overflow: ellipsis;
+
+  /*
+   * This is to ensure the overlay scrollbar isn't overlaying the text. Ideally,
+   * this link would be `height: 100%`, but bug 1598458 is a thing.
+   */
+  padding-bottom: 1.2em;
+}
+</style>
