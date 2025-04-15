@@ -103,10 +103,7 @@
               <th>Date Reported</th>
               <th>URL</th>
               <th>User Comments</th>
-              <th>OS</th>
-              <th>App</th>
-              <th>Channel</th>
-              <th>Version</th>
+              <th>Product</th>
               <th>ETP content blocked?</th>
               <th>ETP blocklist</th>
               <th>Is PBM?</th>

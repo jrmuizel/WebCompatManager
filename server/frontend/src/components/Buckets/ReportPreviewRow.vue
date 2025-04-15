@@ -42,10 +42,10 @@
         :src="staticLogo('android')"
       />
       <span v-else>{{ report.os }}</span>
+      {{ report.app_name }}
+      {{ report.app_version }}
+      ({{ report.app_channel }})
     </td>
-    <td>{{ report.app_name }}</td>
-    <td>{{ report.app_channel }}</td>
-    <td>{{ report.app_version }}</td>
     <td>
       {{
         report.details.boolean
