@@ -1,6 +1,6 @@
 <template>
   <tr v-on:click="report.view_url">
-    <td class="wrap-normal">{{ report.reported_at | date }}</td>
+    <td class="wrap-normal">{{ report.reported_at | shorterDate }}</td>
     <td class="wrap-anywhere">
       <span class="two-line-limit">{{ report.url }}</span>
     </td>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { date } from "../../helpers";
+import { shorterDate } from "../../helpers";
 
 export default {
   props: {
@@ -72,7 +72,7 @@ export default {
     },
   },
   filters: {
-    date: date,
+    shorterDate: shorterDate,
   },
   methods: {
     staticLogo(name) {
