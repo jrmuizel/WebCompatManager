@@ -1,10 +1,20 @@
 <template>
   <tr v-on:click="report.view_url">
-    <td class="wrap-normal">{{ report.reported_at | date }}</td>
-    <td class="wrap-anywhere">
-      <span class="two-line-limit">{{ report.url }}</span>
+    <td class="wrap-normal">
+      {{ report.reported_at | shorterDate }}<br />
+      (<a :href="report.view_url">Full details</a>)
     </td>
-    <td class="wrap-normal">{{ maybeTranslatedComments(report) }}</td>
+    <td class="url-col">
+      <a :href="report.url" target="_blank" rel="noreferrer">
+        {{ report.url }}
+      </a>
+    </td>
+    <td class="wrap-normal comments-col">
+      <div>
+        <strong>{{ report.breakage_category }}</strong
+        >: {{ maybeTranslatedComments(report) }}
+      </div>
+    </td>
     <td>
       <img
         v-if="report.os === 'Linux'"
@@ -35,34 +45,36 @@
         :src="staticLogo('android')"
       />
       <span v-else>{{ report.os }}</span>
-    </td>
-    <td>{{ report.app_name }}</td>
-    <td>{{ report.app_channel }}</td>
-    <td>{{ report.app_version }}</td>
-    <td>{{ report.breakage_category }}</td>
-    <td>
-      {{
-        report.details.boolean
-          .broken_site_report_tab_info_antitracking_has_tracking_content_blocked
-      }}
+      {{ report.app_name }}
+      {{ report.app_version }}
+      ({{ report.app_channel }})
     </td>
     <td>
-      {{
-        report.details.string
-          .broken_site_report_tab_info_antitracking_block_list
-      }}
-    </td>
-    <td>
+      PBM:
       {{
         report.details.boolean
           .broken_site_report_tab_info_antitracking_is_private_browsing
+          | humanBool
+      }}<br />
+
+      Blocklist:
+      {{
+        report.details.string
+          .broken_site_report_tab_info_antitracking_block_list || "n/a"
+      }}<br />
+
+      Any content blocked:
+      {{
+        report.details.boolean
+          .broken_site_report_tab_info_antitracking_has_tracking_content_blocked
+          | humanBool
       }}
     </td>
   </tr>
 </template>
 
 <script>
-import { date } from "../../helpers";
+import { shorterDate } from "../../helpers";
 
 export default {
   props: {
@@ -72,7 +84,14 @@ export default {
     },
   },
   filters: {
-    date: date,
+    shorterDate: shorterDate,
+    humanBool: (value) => {
+      if (value === undefined || value === null) {
+        return "n/a";
+      }
+
+      return value ? "yes" : "no";
+    },
   },
   methods: {
     staticLogo(name) {
@@ -96,3 +115,27 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.comments-col {
+  overflow-wrap: anywhere;
+
+  div {
+    max-height: 150px;
+    overflow: scroll;
+  }
+}
+
+.url-col a {
+  display: block;
+  max-width: 300px;
+  overflow: scroll;
+  text-overflow: ellipsis;
+
+  /*
+   * This is to ensure the overlay scrollbar isn't overlaying the text. Ideally,
+   * this link would be `height: 100%`, but bug 1598458 is a thing.
+   */
+  padding-bottom: 1.2em;
+}
+</style>

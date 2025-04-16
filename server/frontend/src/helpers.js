@@ -52,6 +52,12 @@ export const date = (datetime) => {
   return new Date(datetime).toUTCString();
 };
 
+export const shorterDate = (datetime) => {
+  const [date, time] = new Date(datetime).toISOString().split("T");
+  const hhmm = time.split(":").slice(0, 2).join(":");
+  return `${date} ${hhmm}`;
+};
+
 export const assignExternalBug = (bucketId, bugId, providerId) => {
   const payload = {
     bug: bugId,

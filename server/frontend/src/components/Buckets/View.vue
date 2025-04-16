@@ -90,81 +90,10 @@
                 :data="bucket.report_history"
                 :range="activityRange"
               />
-              <div class="btn-group">
-                <a :href="reportsUrl" class="btn btn-default">View Reports</a>
-                <a
-                  title="Add/Update"
-                  class="btn btn-danger"
-                  v-on:click="submitWatchForm"
-                  >Notify on New Reports</a
-                >
-              </div>
-              <form :action="watchUrl" ref="bucketWatchForm" method="post">
-                <input type="hidden" name="bucket" :value="bucket.id" />
-                <input
-                  type="hidden"
-                  name="report"
-                  :value="bucket.latest_entry_id"
-                />
-              </form>
-            </td>
-          </tr>
-          <tr>
-            <td>Latest Report</td>
-            <td>{{ bucket.latest_report | date }}</td>
-          </tr>
-          <tr>
-            <td>Priority</td>
-            <td>{{ bucket.priority }}</td>
-          </tr>
-          <tr>
-            <td>Signature</td>
-            <td>
-              <div id="signature" class="collapse">
-                <pre><code>{{ prettySignature }}</code></pre>
-              </div>
-              <button
-                aria-controls="signature"
-                aria-expanded="false"
-                class="btn btn-default btn-xs"
-                data-target="#signature"
-                data-toggle="collapse"
-              >
-                <span
-                  aria-label="Show signature field"
-                  class="bi bi-eye-fill"
-                  title="Show signature field"
-                ></span>
-                <span
-                  aria-label="Hide signature field"
-                  class="bi bi-eye-slash-fill"
-                  title="Hide signature field"
-                ></span>
-              </button>
             </td>
           </tr>
         </tbody>
       </table>
-
-      <div v-if="canEdit" class="btn-group">
-        <a
-          aria-label="Edit bucket"
-          class="btn btn-default"
-          :href="editUrl"
-          title="Edit bucket"
-          >Edit</a
-        >
-        <a
-          aria-label="Delete bucket"
-          class="btn btn-danger"
-          :href="delUrl"
-          title="Delete bucket"
-          >Delete</a
-        >
-        <br />
-        <br />
-      </div>
-
       <div class="table-responsive">
         <table
           class="table table-condensed table-hover table-bordered table-db wrap-none"
@@ -174,14 +103,8 @@
               <th>Date Reported</th>
               <th>URL</th>
               <th>User Comments</th>
-              <th>OS</th>
-              <th>App</th>
-              <th>Channel</th>
-              <th>Version</th>
-              <th>Breakage Category</th>
-              <th>ETP content blocked?</th>
-              <th>ETP blocklist</th>
-              <th>Is PBM?</th>
+              <th>Product</th>
+              <th>ETP &amp; PBM</th>
             </tr>
           </thead>
           <tbody>
@@ -317,10 +240,7 @@ export default {
       required: true,
     },
   },
-  mounted() {
-    const el = document.getElementsByName("csrfmiddlewaretoken")[0];
-    this.$refs.bucketWatchForm.appendChild(el);
-  },
+  mounted() {},
   methods: {
     buildQueryParams() {
       const result = {
