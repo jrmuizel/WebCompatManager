@@ -1,6 +1,9 @@
 <template>
   <tr v-on:click="report.view_url">
-    <td class="wrap-normal">{{ report.reported_at | shorterDate }}</td>
+    <td class="wrap-normal">
+      {{ report.reported_at | shorterDate }}<br />
+      (<a :href="report.view_url">Full details</a>)
+    </td>
     <td class="url-col">
       <a :href="report.url" target="_blank" rel="noreferrer">
         {{ report.url }}
