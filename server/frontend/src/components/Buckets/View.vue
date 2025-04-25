@@ -367,6 +367,11 @@ export default {
         ["f7", "component"],
         ["v7", "Privacy: Site Reports"],
         ["f8", "CP"],
+        ["f9", "OP"],
+        ["o10", "substring"],
+        ["f10", "keywords"],
+        ["v10", "webcompat:site-report"],
+        ["f11", "CP"],
       ]);
 
       const url = new URL("https://bugzilla.mozilla.org/buglist.cgi");
