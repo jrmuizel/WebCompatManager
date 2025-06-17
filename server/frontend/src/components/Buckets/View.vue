@@ -188,7 +188,7 @@ export default {
     this.fetch();
   },
   data: function () {
-    const defaultSortKeys = ["-comments__length", "-reported_at"];
+    const defaultSortKeys = ["-reported_at"];
     return {
       currentEntries: "?",
       currentPage: 1,
