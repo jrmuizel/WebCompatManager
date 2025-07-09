@@ -130,6 +130,9 @@ BIGQUERY_TABLE = "moz-fx-dev-dschubert-wckb.webcompat_user_reports.user_reports_
 BIGQUERY_TRANSLATIONS_TABLE = (
     "moz-fx-dev-dschubert-wckb.webcompat_user_reports.translations"
 )
+BIGQUERY_CLASSIFICATION_TABLE = (
+    "moz-fx-dev-dschubert-wckb.webcompat_user_reports.bugbug_predictions"
+)
 BIGQUERY_SERVICE_ACCOUNT = ""
 
 # Modify the way we generate our usernames, based on the email address

@@ -38,10 +38,14 @@ class Command(BaseCommand):
         # These shouldn't even exist, but we have quite a few rows like that
         # anyway. Since they're most likely just broken reports, we don't care.
         result = client.query_and_wait(
-            f"""SELECT r.*, t.language_code, t.translated_text
+            f"""SELECT
+                    r.*, t.language_code, t.translated_text,
+                    c.label as ml_label, c.probability as ml_probability
                 FROM `{settings.BIGQUERY_TABLE}` as r
                 LEFT JOIN `{settings.BIGQUERY_TRANSLATIONS_TABLE}` t
                     ON r.uuid = t.report_uuid
+                LEFT JOIN `{settings.BIGQUERY_CLASSIFICATION_TABLE}` c
+                    ON r.uuid = c.report_uuid
                 WHERE r.url IS NOT NULL
                     AND r.comments IS NOT NULL
                     AND r.reported_at >= @since;""",
@@ -53,6 +57,20 @@ class Command(BaseCommand):
         )
 
         for row in result:
+            # The BugBot ML prediction can assign two labels, invalid or valid,
+            # with a probability between 0 and 1. Having two labels makes
+            # filtering and sorting harder, so let's transform "invalid 95%"
+            # into "valid 5%".
+            # There is a rare chance that a bug will have no score. In this case,
+            # we just assign None, which will get treated as invalid in the
+            # frontend.
+            ml_valid_probability = None
+            match row.ml_label:
+                case "invalid":
+                    ml_valid_probability = 1 - row.ml_probability
+                case "valid":
+                    ml_valid_probability = row.ml_probability
+
             report_obj = Report(
                 app_name=row.app_name,
                 app_channel=row.app_channel,
@@ -66,6 +84,7 @@ class Command(BaseCommand):
                 url=urlsplit(row.url),
                 os=row.os,
                 uuid=row.uuid,
+                ml_valid_probability=ml_valid_probability,
             )
             with suppress(IntegrityError):
                 ReportEntry.objects.create_from_report(report_obj)
