@@ -34,10 +34,9 @@ class Command(BaseCommand):
 
         client = bigquery.Client(**params)
 
-        # For importing, we ignore reports that have no URL or no comment. In
-        # theory, a NULL URL shouldn't even be possible, but we have a few
-        # reports like that. Reports without a comment are very unlikely to be
-        # actionable.
+        # For importing, we ignore reports that have a NULL URL or comment.
+        # These shouldn't even exist, but we have quite a few rows like that
+        # anyway. Since they're most likely just broken reports, we don't care.
         result = client.query_and_wait(
             f"""SELECT r.*, t.language_code, t.translated_text
                 FROM `{settings.BIGQUERY_TABLE}` as r
