@@ -33,12 +33,19 @@ class Command(BaseCommand):
             )
 
         client = bigquery.Client(**params)
+
+        # For importing, we ignore reports that have no URL or no comment. In
+        # theory, a NULL URL shouldn't even be possible, but we have a few
+        # reports like that. Reports without a comment are very unlikely to be
+        # actionable.
         result = client.query_and_wait(
             f"""SELECT r.*, t.language_code, t.translated_text
                 FROM `{settings.BIGQUERY_TABLE}` as r
                 LEFT JOIN `{settings.BIGQUERY_TRANSLATIONS_TABLE}` t
                     ON r.uuid = t.report_uuid
-                WHERE r.reported_at >= @since;""",
+                WHERE r.url IS NOT NULL
+                    AND r.comments IS NOT NULL
+                    AND r.reported_at >= @since;""",
             job_config=bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ScalarQueryParameter("since", "DATETIME", options["since"])
@@ -47,8 +54,6 @@ class Command(BaseCommand):
         )
 
         for row in result:
-            if row.comments is None:
-                continue
             report_obj = Report(
                 app_name=row.app_name,
                 app_channel=row.app_channel,

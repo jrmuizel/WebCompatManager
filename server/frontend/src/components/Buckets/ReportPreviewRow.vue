@@ -11,7 +11,7 @@
     </td>
     <td class="wrap-normal comments-col">
       <div>
-        <strong>{{ report.breakage_category }}</strong
+        <strong>{{ report.breakage_category ?? "unknown" }}</strong
         >: {{ maybeTranslatedComments(report) }}
       </div>
     </td>

@@ -185,7 +185,9 @@ class ReportEntrySerializer(serializers.ModelSerializer):
     app_name = serializers.CharField(source="app.name")
     app_channel = serializers.CharField(source="app.channel")
     app_version = serializers.CharField(source="app.version")
-    breakage_category = serializers.CharField(source="breakage_category.value")
+    breakage_category = serializers.CharField(
+        source="breakage_category.value", allow_null=True
+    )
     os = serializers.CharField(source="os.name", max_length=63)
 
     class Meta:
