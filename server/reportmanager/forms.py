@@ -217,7 +217,7 @@ class UserSettingsForm(ModelForm):
             )
         )
 
-        instance = kwargs.get("instance", None)
+        instance = kwargs.get("instance")
         if instance:
             self.initial["email"] = instance.user.email
 

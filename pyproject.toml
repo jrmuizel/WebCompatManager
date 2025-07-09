@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "WebCompatManager"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [
     {name = "Christian Holler", email = "choller@mozilla.com"},
     {name = "Jesse Schwartzentruber", email = "jschwartzentruber@mozilla.com"},
@@ -92,7 +92,7 @@ norecursedirs = [
 
 [tool.ruff]
 fix = true
-target-version = "py39"
+target-version = "py310"
 extend-exclude = ["**/migrations/*.py"]
 
 [tool.ruff.lint]
