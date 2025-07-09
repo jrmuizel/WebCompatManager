@@ -31,10 +31,6 @@ tasks:
         - tox
       jobs:
         include:
-          - name: tests python 3.9 django 4.x
-            version: "3.9"
-            env:
-              TOXENV: py39
           - name: tests python 3.10 django 4.x
             version: "3.10"
             env:
