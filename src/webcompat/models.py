@@ -68,17 +68,13 @@ class Report:
     def create_signature(self) -> Signature:
         """Create a default signature"""
         return Signature(
-            f"""
-            {{
-              "symptoms": [
-                {{
-                  "type": "url",
-                  "part": "hostname",
-                  "value": "{self.url.hostname}"
-                }}
-              ]
-            }}
-            """
+            json.dumps(
+                {
+                    "symptoms": [
+                        {"type": "url", "part": "hostname", "value": self.url.hostname}
+                    ]
+                }
+            )
         )
 
 
