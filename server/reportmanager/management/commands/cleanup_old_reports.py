@@ -71,12 +71,13 @@ class Command(BaseCommand):
 
             bug.delete()
 
-        # Select all buckets that are empty and delete them
-        for bucket in Bucket.objects.annotate(size=Count("reportentry")).filter(
-            size=0, bug=None
-        ):
-            LOG.info("Removing empty bucket %d", bucket.id)
-            bucket.delete()
+        if not options["leave_empty_buckets"]:
+            # Select all buckets that are empty and delete them
+            for bucket in Bucket.objects.annotate(size=Count("reportentry")).filter(
+                size=0, bug=None
+            ):
+                LOG.info("Removing empty bucket %d", bucket.id)
+                bucket.delete()
 
         # Select all entries that are older than x days
         # Again, for the same reason as mentioned above, we have to delete entries in
@@ -97,3 +98,12 @@ class Command(BaseCommand):
         if orphan_bug_count:
             LOG.info("Removing %d orphaned Bug objects", orphan_bug_count)
             orphan_bugs.delete()
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--leave-empty-buckets",
+            help="skip deleting empty buckets, for example when re-importing reports",
+            action="store_true",
+            required=False,
+            default=False,
+        )
