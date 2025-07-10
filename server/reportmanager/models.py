@@ -427,7 +427,7 @@ class ReportHit(models.Model):
 
 class ReportEntryManager(models.Manager):
     @transaction.atomic
-    def create_from_report(self, report):
+    def create_from_report(self, report, bucket_id=None):
         app = App.objects.get_or_create(
             channel=report.app_channel,
             name=report.app_name,
@@ -452,6 +452,7 @@ class ReportEntryManager(models.Manager):
             comments_translated=report.comments_translated,
             comments_original_language=report.comments_original_language,
             ml_valid_probability=report.ml_valid_probability,
+            bucket_id=bucket_id,
         )
 
 
@@ -523,9 +524,11 @@ class ReportEntry(models.Model):
                 reported_at=self.reported_at,
                 uuid=self.uuid,
                 url=urlsplit(self.url),
-                breakage_category=self.breakage_category.value
-                if self.breakage_category is not None
-                else None,
+                breakage_category=(
+                    self.breakage_category.value
+                    if self.breakage_category is not None
+                    else None
+                ),
                 ml_valid_probability=self.ml_valid_probability,
             )
         return self._cached_report
