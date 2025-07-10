@@ -247,6 +247,7 @@ export default {
         query: JSON.stringify({
           op: "AND",
           comments__length__gt: 0,
+          ml_valid_probability__gt: 0.95,
           bucket_id: this.bucket.id,
         }),
       };

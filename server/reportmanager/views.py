@@ -708,6 +708,7 @@ class ReportEntryViewSet(
         "comments",
         "comments__length",
         "details",
+        "ml_valid_probability",
         "os__name",
         "reported_at",
         "url",
@@ -1094,7 +1095,7 @@ def json_to_query(json_str):
         raise RuntimeError(f"Invalid JSON: {e}")
 
     def get_query_obj(obj, key=None):
-        if obj is None or isinstance(obj, str | list | int):
+        if obj is None or isinstance(obj, str | list | int | float):
             kwargs = {key: obj}
             qobj = Q(**kwargs)
             return qobj

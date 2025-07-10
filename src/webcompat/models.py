@@ -53,6 +53,7 @@ class Report:
     comments_original_language: str | None = None
     app_channel: str | None = None
     breakage_category: str | None = None
+    ml_valid_probability: float | None = None
 
     @classmethod
     def load(cls, data: str) -> Report:

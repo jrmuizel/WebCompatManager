@@ -451,6 +451,7 @@ class ReportEntryManager(models.Manager):
             comments=report.comments,
             comments_translated=report.comments_translated,
             comments_original_language=report.comments_original_language,
+            ml_valid_probability=report.ml_valid_probability,
         )
 
 
@@ -468,6 +469,7 @@ class ReportEntry(models.Model):
     reported_at = models.DateTimeField()
     url = models.URLField(max_length=8192)
     uuid = models.UUIDField(unique=True)
+    ml_valid_probability = models.FloatField(null=True)
 
     objects = ReportEntryManager()
 
@@ -524,6 +526,7 @@ class ReportEntry(models.Model):
                 breakage_category=self.breakage_category.value
                 if self.breakage_category is not None
                 else None,
+                ml_valid_probability=self.ml_valid_probability,
             )
         return self._cached_report
 
