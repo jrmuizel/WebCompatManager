@@ -37,7 +37,7 @@ class Command(BaseCommand):
         # For importing, we ignore reports that have a NULL URL or comment.
         # These shouldn't even exist, but we have quite a few rows like that
         # anyway. Since they're most likely just broken reports, we don't care.
-        result = client.query_and_wait(
+        result = client.query(
             f"""SELECT
                     r.*, t.language_code, t.translated_text,
                     c.label as ml_label, c.probability as ml_probability
